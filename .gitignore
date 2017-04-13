@@ -5,3 +5,6 @@ server/target
 server/.idea
 server/*.iml
 server/**/*.gitkeep
+server/.classpath
+server/.project
+server/.settings
