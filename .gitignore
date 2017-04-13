@@ -1,0 +1,7 @@
+node_modules/
+npm-debug.log
+npm-debug.log.*
+server/target
+server/.idea
+server/*.iml
+server/**/*.gitkeep
