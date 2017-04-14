@@ -29,7 +29,7 @@ class NavBar extends Component {
               <span className = 'icon-bar'></span>
               <span className = 'icon-bar'></span>
             </button>
-            <Link className = 'navbar-brand' to = '/'>Pixis</Link>
+            <Link className = 'navbar-brand' to = '/'>Pixis1</Link>
           </div>
           <div className = 'collapse navbar-collapse' id = 'categories'>
             <ul className = 'nav navbar-nav'>

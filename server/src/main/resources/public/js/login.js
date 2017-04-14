@@ -18,7 +18,7 @@ $( document ).ready(function() {
         			var script = document.createElement('script');
                     script.type = 'text/javascript';
                     script.async = 'async';
-                    script.src = '/dist/app.js';
+                    script.src = 'dist/app.js';
                     document.getElementById('app').appendChild(script);
         		}
       		},

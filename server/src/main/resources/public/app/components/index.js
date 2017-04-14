@@ -8,6 +8,7 @@ const IndexRedirect = ReactRouter.IndexRedirect;
 const Main = require('./main');
 const Subcategories = require('./subcategories');
 const Gallery = require('./gallery');
+const Logout = require('./logout');
 const ListArticles = require('./list-articles');
 const Article = require('./article');
 
@@ -20,7 +21,8 @@ class NotFound extends React.Component {
 ReactDOM.render((
   <Router history = {browserHistory}>
     <Route path = '/' component = {Main}>
-      <IndexRedirect to = '/articles/all'/>
+      <IndexRedirect to = 'articles/all'/>
+      <Route path = 'logout' component = {Logout}/>
       <Route path = 'gallery' component = {Gallery}/>
       <Route path = ':category' component = {Subcategories}>
         <IndexRedirect to = 'all' />

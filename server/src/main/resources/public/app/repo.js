@@ -40,4 +40,14 @@ function getArticle(category, subcategory, article) {
   })
 };
 
-module.exports = { getAllCategories, getAllSubcategories, getAllArticles, getArticle };
+function logout() {
+  return new Promise((resolve, reject) =>{
+    $.get(`/logout`).done((data) => {
+      
+    }).fail((error) => {
+      reject(error)
+    })
+  })
+};
+
+module.exports = { getAllCategories, getAllSubcategories, getAllArticles, getArticle, logout };
