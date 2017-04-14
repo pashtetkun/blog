@@ -4,6 +4,8 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Session;
+
 import org.jsoup.Jsoup;
 
 import com.google.gson.Gson;
@@ -19,6 +21,10 @@ public class AuthController {
 	public static Object handleLogin(Request req, Response res) {
         return doLogin(req, res);
     }
+	
+	public static Object handleLogout(Request req, Response res) {
+		return doLogout(req, res);
+	}
 	
 	private static String doLogin(Request req, Response res) {
 		
@@ -45,5 +51,13 @@ public class AuthController {
 		}
 		
 		return gson.toJson(respMap);
+	}
+	
+	private static Response doLogout(Request req, Response res){
+		Session session = req.session(false);
+        if(session != null) 
+        	session.invalidate();
+        res.redirect("/");
+        return res;
 	}
 }

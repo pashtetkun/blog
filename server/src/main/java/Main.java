@@ -34,6 +34,10 @@ public class Main {
         	return AuthController.handleLogin(request, response);
         });
         
+        get("/logout", (request, response) -> {
+        	return AuthController.handleLogout(request, response);
+        });
+        
         //ensure user is logged in to have access to protected routes
         before((request, response) -> {
         	String url = request.url();
