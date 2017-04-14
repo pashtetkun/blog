@@ -4,8 +4,8 @@
   "description": "Mini blog",
   "main": "server.js",
   "scripts": {
-    "compile-js": "browserify app/components/index.js -o server/src/main/resources/public/js/app.js -t [ babelify --presets [ es2015 react ] ] -v",
-    "watch-js": "watchify app/components/index.js -o server/src/main/resources/public/js/app.js -t [ babelify --presets [ es2015 react ] ] -v"
+    "compile-js": "browserify app/components/index.js -o dist/app.js -t [ babelify --presets [ es2015 react ] ] -v",
+    "watch-js": "watchify app/components/index.js -o dist/app.js -t [ babelify --presets [ es2015 react ] ] -v"
   },
   "author": "kot",
   "license": "ISC",
