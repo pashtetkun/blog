@@ -13,7 +13,13 @@ $( document ).ready(function() {
         		// callback code here
         		if (response.status == 'success'){
         			localStorage.setItem("login", val);
-        			window.location.replace("/");
+        			$("#loginFormDiv").remove();
+
+        			var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.async = 'async';
+                    script.src = '/js/app.js';
+                    document.getElementById('app').appendChild(script);
         		}
       		},
 	    	error: function(response) {

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -21,39 +22,28 @@ public class AuthController {
 	
 	private static String doLogin(Request req, Response res) {
 		
-        //the username is sent here and the salt and verifier for that username is
+		//the username is sent here and the salt and verifier for that username is
         //is sent back to the client
         //then the auth() method is invoked
-        HashMap<String, String> respMap;
+        HashMap<String, String> respMap = new HashMap<String, String>();
         
         res.type("application/json");
         
-        
         String username = Jsoup.parse(req.queryParams("username")).text();
-        
-        
-		if (username != null && !username.isEmpty()) {
-
-			/*server = new SRP6JavascriptServerSessionSHA256(CryptoParams.N_base10, CryptoParams.g_base10);
-
-			gen = new ChallengeGen(email);
-
-			respMap = gen.getChallenge(server);*/
+        String password = Jsoup.parse(req.queryParams("password")).text();
+            
+		if ("user".equals(username) && "123456".equals(password)) {		
+			res.status(200);
+			respMap.put("code", "200");
+			respMap.put("status", "success");
+			req.session().attribute("username", username);
 			
-			respMap = new HashMap<String, String>();
-
-			if (respMap != null) {
-				res.status(200);
-				respMap.put("code", "200");
-				respMap.put("status", "success");
-				return gson.toJson(respMap);
-			}
+		} else {
+			res.status(401);
+			respMap.put("status", "Invalid User Credentials");
+			respMap.put("code", "401");
 		}
-		respMap = new HashMap<>();
-
-		res.status(401);
-		respMap.put("status", "Invalid User Credentials");
-		respMap.put("code", "401");
+		
 		return gson.toJson(respMap);
 	}
 }

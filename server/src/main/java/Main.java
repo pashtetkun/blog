@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import spark.Route;
+import spark.Session;
 import spark.Spark;
 import spark.utils.IOUtils;
 import java.io.File;
@@ -29,12 +30,22 @@ public class Main {
         Route authCallback = new CallbackRoute(securityCfg);
         get("/callback", authCallback);*/
         
-        get("/login", (request, response) -> 
-        	IOUtils.toString(Spark.class.getResourceAsStream("/templates/login.html")));
-        
-        
         post("/doLogin", (request, response) -> {
         	return AuthController.handleLogin(request, response);
+        });
+        
+        //ensure user is logged in to have access to protected routes
+        before((request, response) -> {
+        	String url = request.url();
+        	boolean isLoginPage = "http://127.0.0.1:8080/doLogin".equals(url);
+        	
+            Session session = request.session(true);
+            boolean auth = session.attribute("username") != null;
+            
+            if(!auth && !isLoginPage) { 
+                //response.redirect("/login");
+                halt(401);
+            }
         });
 
         get("/getAllCategories", (request, response) -> {
