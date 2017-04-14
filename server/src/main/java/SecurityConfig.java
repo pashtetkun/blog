@@ -9,10 +9,10 @@ public class SecurityConfig implements ConfigFactory {
 
 	@Override
     public Config build() {
-		final FormClient formClient = new FormClient("http://localhost:8080/loginForm", new SimpleTestUsernamePasswordAuthenticator());
-		//final IndirectBasicAuthClient indirectBasicAuthClient = new IndirectBasicAuthClient(new SimpleTestUsernamePasswordAuthenticator());
+		final FormClient formClient = new FormClient("http://localhost:8080/login", new SimpleTestUsernamePasswordAuthenticator());
+		final IndirectBasicAuthClient indirectBasicAuthClient = new IndirectBasicAuthClient(new SimpleTestUsernamePasswordAuthenticator());
 		
-		final Clients clients = new Clients("http://localhost:8080/callback", formClient/*, indirectBasicAuthClient*/);
+		final Clients clients = new Clients("http://localhost:8080/callback", formClient, indirectBasicAuthClient);
 		final Config config = new Config(clients);
 		return config;
 	}

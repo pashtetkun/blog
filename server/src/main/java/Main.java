@@ -30,7 +30,12 @@ public class Main {
         get("/callback", authCallback);*/
         
         get("/login", (request, response) -> 
-        	IOUtils.toString(Spark.class.getResourceAsStream("/public/login.html")));
+        	IOUtils.toString(Spark.class.getResourceAsStream("/templates/login.html")));
+        
+        
+        post("/doLogin", (request, response) -> {
+        	return AuthController.handleLogin(request, response);
+        });
 
         get("/getAllCategories", (request, response) -> {
             List<String> nameFolders = getNameFolders("src/main/resources/repo");
