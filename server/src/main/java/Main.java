@@ -1,4 +1,6 @@
 import com.google.gson.Gson;
+
+import spark.Route;
 import spark.Spark;
 import spark.utils.IOUtils;
 import java.io.File;
@@ -6,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.pac4j.core.config.Config;
+import org.pac4j.sparkjava.CallbackRoute;
 
 import static spark.Spark.*;
 
@@ -19,6 +24,13 @@ public class Main {
         port(8080);
         staticFiles.location("/public");
         Gson gson = new Gson();
+        
+        /*Config securityCfg = new SecurityConfig().build();
+        Route authCallback = new CallbackRoute(securityCfg);
+        get("/callback", authCallback);*/
+        
+        get("/login", (request, response) -> 
+        	IOUtils.toString(Spark.class.getResourceAsStream("/public/login.html")));
 
         get("/getAllCategories", (request, response) -> {
             List<String> nameFolders = getNameFolders("src/main/resources/repo");
