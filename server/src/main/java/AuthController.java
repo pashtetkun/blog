@@ -53,11 +53,18 @@ public class AuthController {
 		return gson.toJson(respMap);
 	}
 	
-	private static Response doLogout(Request req, Response res){
+	private static String doLogout(Request req, Response res){
 		Session session = req.session(false);
         if(session != null) 
         	session.invalidate();
-        res.redirect("/");
-        return res;
+        //res.redirect("/");
+        //res.redirect("/public/index.html");
+        HashMap<String, String> respMap = new HashMap<String, String>();
+        
+        res.type("application/json");
+        res.status(200);
+		respMap.put("code", "200");
+		respMap.put("status", "success");
+        return gson.toJson(respMap);
 	}
 }

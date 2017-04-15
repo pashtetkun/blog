@@ -43,7 +43,9 @@ function getArticle(category, subcategory, article) {
 function logout() {
   return new Promise((resolve, reject) =>{
     $.get(`/logout`).done((data) => {
-      
+      if (data.status == 'success'){
+        window.location.replace("/");
+      }
     }).fail((error) => {
       reject(error)
     })

@@ -8,21 +8,14 @@ class Logout extends Component {
     super();
   }
 
-  logoutHandler() {
+  componentWillMount(){
   	Repo.logout().then((data) => {
-      
+  		
     });
   }
 
   render() {
-    return (
-      <div>
-        <a href = '#'
-            onClick={(e) => this.logoutHandler()}>
-              Логаут22
-          </a>
-      </div>
-    );
+    return null;
   }
 };
 
