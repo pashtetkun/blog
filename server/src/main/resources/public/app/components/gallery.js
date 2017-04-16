@@ -2,6 +2,7 @@ const React = require('react');
 const Component = React.Component;
 const Lightbox = require('react-images');
 const IMAGES = require('../constants').IMAGES;
+const ReactInterval = require('react-interval');
 
 class Gallery extends Component {
 
@@ -80,6 +81,9 @@ class Gallery extends Component {
           onClickPrev={this.gotoPrevious}
           onClickNext={this.gotoNext}
           onClose={this.closeLightbox}
+        />
+        <ReactInterval timeout={3000} enabled={this.state.lightboxIsOpen}
+        	callback = {this.gotoNext}
         />
       </div>
     );
