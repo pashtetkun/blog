@@ -38,6 +38,14 @@ public class Main {
         	return AuthController.handleLogout(request, response);
         });
         
+        get("/readme", (request, response) -> {
+        	return new CloudService().getReadme();
+        });
+        
+        get("/articleEx", (request, response) -> {
+        	return new CloudService().getArticleEx();
+        });
+        
         //ensure user is logged in to have access to protected routes
         before((request, response) -> {
         	String url = request.url();
