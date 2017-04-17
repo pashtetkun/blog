@@ -1,0 +1,40 @@
+.container-table {
+    display: table;
+    width: 25%;
+    padding-top: 250px;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.display-no {
+	display: none;
+}
+
+.display-yes {
+	display: block;
+}
+
+.login-failure {
+	color: red;
+	font-size: 14pt;
+}
+
+.form-label {
+	color: #dff0d8;
+	font-size: 14pt;
+}
+
+.wrap-content {
+	padding-top: 10px;
+    	padding-bottom: 10px;
+}
+
+.wrapper-btn-submit {
+	text-align: center;
+}
+
+
+
+

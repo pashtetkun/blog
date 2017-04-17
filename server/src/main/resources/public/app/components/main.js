@@ -15,9 +15,6 @@ class Main extends Component {
         <div className = 'row'>
           <NavBar selectedCategory = {selectedCategory} />
         </div>
-        <div className = 'row'>
-          <Link to='/logout' >логаут</Link>
-        </div>
         <div className = 'row customrow'>
           {this.props.children}
         </div>

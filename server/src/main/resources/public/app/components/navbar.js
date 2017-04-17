@@ -20,6 +20,7 @@ class NavBar extends Component {
                 <Link to = {`/${category}`}>{categoryName}</Link>
               </li>);
     }) : '';
+    var login = localStorage.getItem("login");
     return(
       <nav className = 'navbar navbar-default'>
         <div className = 'container-fluid'>
@@ -29,7 +30,10 @@ class NavBar extends Component {
               <span className = 'icon-bar'></span>
               <span className = 'icon-bar'></span>
             </button>
-            <Link className = 'navbar-brand' to = '/'>Pixis1</Link>
+            <Link className = 'navbar-brand' to = '/'>Pixis</Link>
+          </div>
+          <div className = 'navbar-right logout'>
+            <Link to='/logout' >Выйти ({login})</Link>
           </div>
           <div className = 'collapse navbar-collapse' id = 'categories'>
             <ul className = 'nav navbar-nav'>

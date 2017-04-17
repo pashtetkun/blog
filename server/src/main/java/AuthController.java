@@ -45,9 +45,9 @@ public class AuthController {
 			req.session().attribute("username", username);
 			
 		} else {
-			res.status(401);
+			res.status(200);
 			respMap.put("status", "Invalid User Credentials");
-			respMap.put("code", "401");
+			respMap.put("code", "200");
 		}
 		
 		return gson.toJson(respMap);
