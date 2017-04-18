@@ -1,5 +1,7 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -18,7 +20,7 @@ public class AuthController {
 		
 	}
 	
-	public static Object handleLogin(Request req, Response res) {
+	public static Object handleLogin(Request req, Response res) throws IOException {
         return doLogin(req, res);
     }
 	
@@ -26,7 +28,7 @@ public class AuthController {
 		return doLogout(req, res);
 	}
 	
-	private static String doLogin(Request req, Response res) {
+	private static String doLogin(Request req, Response res) throws IOException {
 		
 		//the username is sent here and the salt and verifier for that username is
         //is sent back to the client
@@ -37,8 +39,13 @@ public class AuthController {
         
         String username = Jsoup.parse(req.queryParams("username")).text();
         String password = Jsoup.parse(req.queryParams("password")).text();
+        
+        PropertiesService ps = new PropertiesService();
+        Properties p = ps.getProperties();
+        String user = p.getProperty("username", "user");
+        String pwd = p.getProperty("password", "123456");
             
-		if ("user".equals(username) && "123456".equals(password)) {		
+		if (user.equals(username) && pwd.equals(password)) {		
 			res.status(200);
 			respMap.put("code", "200");
 			respMap.put("status", "success");

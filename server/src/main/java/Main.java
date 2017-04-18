@@ -48,8 +48,8 @@ public class Main {
         
         //ensure user is logged in to have access to protected routes
         before((request, response) -> {
-        	String url = request.url();
-        	boolean isLoginAction = "http://127.0.0.1:8080/doLogin".equals(url);
+        	String uri = request.uri();   	
+        	boolean isLoginAction = "/doLogin".equals(uri);
         	
             Session session = request.session(true);
             boolean auth = session.attribute("username") != null;
