@@ -33,10 +33,6 @@ public class Main {
         Properties properties = new PropertiesService().getProperties();
         CloudService cloudService = new CloudService(properties);
         
-        /*Config securityCfg = new SecurityConfig().build();
-        Route authCallback = new CallbackRoute(securityCfg);
-        get("/callback", authCallback);*/
-        
         post("/doLogin", (request, response) -> {
         	return AuthController.handleLogin(request, response, properties);
         });
@@ -53,6 +49,10 @@ public class Main {
         	return cloudService.getArticleEx();
         });
         
+        get("/categories", (request, response) -> {
+        	return cloudService.getNameFolders("");
+        });
+        
         //ensure user is logged in to have access to protected routes
         before((request, response) -> {
         	String uri = request.uri();   	
@@ -67,20 +67,29 @@ public class Main {
         });
 
         get("/getAllCategories", (request, response) -> {
-            List<String> nameFolders = getNameFolders("src/main/resources/repo");
+            //List<String> nameFolders = getNameFolders("src/main/resources/repo");
+        	System.out.println("getAllCategories start...");
+        	List<String> nameFolders = cloudService.getNameFolders("");
+        	System.out.println("getAllCategories end.");
             return gson.toJson(nameFolders);
         });
 
         get("/getAllSubcategories/:category", (request, response) -> {
             String category = request.params("category");
-            List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category);
+            System.out.println("getAllSubCategories start..." + category);
+            //List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category);
+            List<String> nameFolders = cloudService.getNameFolders("/"+category);
+            System.out.println("getAllSubCategories end." + category);
             return gson.toJson(nameFolders);
         });
 
         get("/getAllArticles/:category/:subcategory", (request, response) -> {
             String category = request.params("category");
             String subcategory = request.params("subcategory");
-            List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category + "/" + subcategory);
+            System.out.println("getArticles start..." + category + "." + subcategory);
+            //List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category + "/" + subcategory);
+            List<String> nameFolders = cloudService.getNameFolders("/"+category + "/" + subcategory);
+            System.out.println("getArticles end.");
             return gson.toJson(nameFolders);
         });
 
