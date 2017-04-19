@@ -1,19 +1,23 @@
-import com.google.gson.Gson;
+import static spark.Spark.before;
+import static spark.Spark.get;
+import static spark.Spark.halt;
+import static spark.Spark.port;
+import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
-import spark.Route;
-import spark.Session;
-import spark.Spark;
-import spark.utils.IOUtils;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import org.pac4j.core.config.Config;
-import org.pac4j.sparkjava.CallbackRoute;
+import com.google.gson.Gson;
 
-import static spark.Spark.*;
+import spark.Session;
+import spark.Spark;
+import spark.utils.IOUtils;
 
 /**
  * Created by 4 on 08.11.2016.
@@ -21,17 +25,20 @@ import static spark.Spark.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         port(8080);
         staticFiles.location("/public");
         Gson gson = new Gson();
+        
+        Properties properties = new PropertiesService().getProperties();
+        CloudService cloudService = new CloudService(properties);
         
         /*Config securityCfg = new SecurityConfig().build();
         Route authCallback = new CallbackRoute(securityCfg);
         get("/callback", authCallback);*/
         
         post("/doLogin", (request, response) -> {
-        	return AuthController.handleLogin(request, response);
+        	return AuthController.handleLogin(request, response, properties);
         });
         
         get("/logout", (request, response) -> {
@@ -39,11 +46,11 @@ public class Main {
         });
         
         get("/readme", (request, response) -> {
-        	return new CloudService().getReadme();
+        	return cloudService.getReadme();
         });
         
         get("/articleEx", (request, response) -> {
-        	return new CloudService().getArticleEx();
+        	return cloudService.getArticleEx();
         });
         
         //ensure user is logged in to have access to protected routes
