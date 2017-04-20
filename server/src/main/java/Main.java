@@ -41,18 +41,6 @@ public class Main {
         	return AuthController.handleLogout(request, response);
         });
         
-        get("/readme", (request, response) -> {
-        	return cloudService.getReadme();
-        });
-        
-        get("/articleEx", (request, response) -> {
-        	return cloudService.getArticleEx();
-        });
-        
-        get("/categories", (request, response) -> {
-        	return cloudService.getNameFolders("");
-        });
-        
         //ensure user is logged in to have access to protected routes
         before((request, response) -> {
         	String uri = request.uri();   	
@@ -97,8 +85,10 @@ public class Main {
             String category = request.params("category");
             String subcategory = request.params("subcategory");
             String article = request.params("article");
-            String pathToArticle = "src/main/resources/repo/" + category + "/" + subcategory + "/" + article;
-            String content = new String(Files.readAllBytes(Paths.get(pathToArticle)));
+            //String pathToArticle = "src/main/resources/repo/" + category + "/" + subcategory + "/" + article;
+            String pathToArticle = "/" + category + "/" + subcategory + "/" + article;
+            //String content = new String(Files.readAllBytes(Paths.get(pathToArticle)));
+            String content = cloudService.getArticle(pathToArticle);
             return gson.toJson(content);
         });
 
