@@ -14,7 +14,6 @@ import java.util.Properties;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -25,7 +24,6 @@ import com.google.gson.JsonParser;
 
 public class CloudService {
 	
-	private final String repoUrl = "https://api.github.com/repos";
 	private String repoOwner;
 	private String repoName;
 	private String folder;
@@ -50,7 +48,6 @@ public class CloudService {
 	
 	private List getResponseList (String path) throws URISyntaxException, IOException{
 		String url = getRequestUrl(path);
-		System.out.println(url);
 		HttpGet request = new HttpGet(url);
 		request.addHeader("User-Agent", USER_AGENT);
 		HttpClient client = HttpClientBuilder.create().build();
@@ -62,22 +59,18 @@ public class CloudService {
 		    BufferedReader br = new BufferedReader(
                     new InputStreamReader(entity.getContent()));
 		    String jsonStr = br.readLine();
-		    System.out.println(jsonStr);
 		    Gson gson = new Gson();
 		    JsonParser parser = new JsonParser();
 		    JsonElement rootObject = parser.parse(jsonStr);
 		    if (rootObject.isJsonArray())
 		    	jsonList = gson.fromJson(rootObject, ArrayList.class);
 		}
-
-		System.out.println("Response Code : "
-		                + response.getStatusLine().getStatusCode());
+		
 		return jsonList;
 	}
 	
 	private String getResponseArticle (String path) throws URISyntaxException, IOException{
 		String url = getRequestUrl(path);
-		System.out.println(url);
 		HttpGet request = new HttpGet(url);
 		request.addHeader("User-Agent", USER_AGENT);
 		HttpClient client = HttpClientBuilder.create().build();
@@ -90,7 +83,6 @@ public class CloudService {
 		    BufferedReader br = new BufferedReader(
                     new InputStreamReader(entity.getContent()));
 		    jsonStr = br.readLine();
-		    System.out.println(jsonStr);
 		    Gson gson = new Gson();
 		    JsonParser parser = new JsonParser();
 		    JsonElement rootObject = parser.parse(jsonStr);
@@ -107,9 +99,7 @@ public class CloudService {
 				jsonStr = IOUtils.toString(is, StandardCharsets.UTF_8.name());
 		    }
 		}
-
-		System.out.println("Response Code : "
-		                + response.getStatusLine().getStatusCode());
+		
 		return jsonStr;
 	}
 	

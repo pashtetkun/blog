@@ -7,8 +7,6 @@ import static spark.Spark.staticFiles;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -56,28 +54,22 @@ public class Main {
 
         get("/getAllCategories", (request, response) -> {
             //List<String> nameFolders = getNameFolders("src/main/resources/repo");
-        	System.out.println("getAllCategories start...");
         	List<String> nameFolders = cloudService.getNameFolders("");
-        	System.out.println("getAllCategories end.");
             return gson.toJson(nameFolders);
         });
 
         get("/getAllSubcategories/:category", (request, response) -> {
             String category = request.params("category");
-            System.out.println("getAllSubCategories start..." + category);
             //List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category);
             List<String> nameFolders = cloudService.getNameFolders("/"+category);
-            System.out.println("getAllSubCategories end." + category);
             return gson.toJson(nameFolders);
         });
 
         get("/getAllArticles/:category/:subcategory", (request, response) -> {
             String category = request.params("category");
             String subcategory = request.params("subcategory");
-            System.out.println("getArticles start..." + category + "." + subcategory);
             //List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category + "/" + subcategory);
             List<String> nameFolders = cloudService.getNameFolders("/"+category + "/" + subcategory);
-            System.out.println("getArticles end.");
             return gson.toJson(nameFolders);
         });
 

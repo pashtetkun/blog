@@ -60,8 +60,7 @@ public class AuthController {
 		Session session = req.session(false);
         if(session != null) 
         	session.invalidate();
-        //res.redirect("/");
-        //res.redirect("/public/index.html");
+        
         HashMap<String, String> respMap = new HashMap<String, String>();
         
         res.type("application/json");
