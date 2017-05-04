@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,6 +30,8 @@ public class CloudService {
 	private String folder;
 	
 	private final String USER_AGENT = "Mozilla/5.0";
+	
+	private final String ADMIN_EXTENSION = "markdown";
 	
 	public CloudService(Properties properties){
 		this.repoOwner = properties.getProperty("account", "testAccount");
@@ -103,10 +106,14 @@ public class CloudService {
 		return jsonStr;
 	}
 	
-	public ArrayList<String> getNameFolders(String path) throws URISyntaxException, IOException{
+	public ArrayList<String> getNameFolders(String path, boolean forAdmin) throws URISyntaxException, IOException{
 		ArrayList<String> directories = new ArrayList<>();
 		List<Map> json = getResponseList(path);
 		for (Map m : json){
+			String name = m.get("name").toString();
+			String ext = FilenameUtils.getExtension(name);
+			if (ADMIN_EXTENSION.equals(ext) && !forAdmin)
+				continue;
 			directories.add(m.get("name").toString());
 		}
 		

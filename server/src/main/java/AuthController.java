@@ -40,8 +40,13 @@ public class AuthController {
         
         String user = properties.getProperty("username", "user");
         String pwd = properties.getProperty("password", "123456");
+        
+        String login_admin = properties.getProperty("login_admin", "admin");
+        String pwd_admin = properties.getProperty("password_admin", "admin");
             
-		if (user.equals(username) && pwd.equals(password)) {		
+		if ((user.equals(username) && pwd.equals(password)) 
+			|| (login_admin.equals(username) && pwd_admin.equals(password)))
+		{		
 			res.status(200);
 			respMap.put("code", "200");
 			respMap.put("status", "success");

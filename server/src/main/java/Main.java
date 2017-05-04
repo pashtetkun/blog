@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.google.gson.Gson;
 
+import spark.Request;
 import spark.Session;
 import spark.Spark;
 import spark.utils.IOUtils;
@@ -54,14 +55,16 @@ public class Main {
 
         get("/getAllCategories", (request, response) -> {
             //List<String> nameFolders = getNameFolders("src/main/resources/repo");
-        	List<String> nameFolders = cloudService.getNameFolders("");
+        	boolean forAdmin = isAdmin(request, properties);
+        	List<String> nameFolders = cloudService.getNameFolders("", forAdmin);
             return gson.toJson(nameFolders);
         });
 
         get("/getAllSubcategories/:category", (request, response) -> {
             String category = request.params("category");
             //List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category);
-            List<String> nameFolders = cloudService.getNameFolders("/"+category);
+            boolean forAdmin = isAdmin(request, properties);
+            List<String> nameFolders = cloudService.getNameFolders("/"+category, forAdmin);
             return gson.toJson(nameFolders);
         });
 
@@ -69,7 +72,8 @@ public class Main {
             String category = request.params("category");
             String subcategory = request.params("subcategory");
             //List<String> nameFolders = getNameFolders("src/main/resources/repo/" + category + "/" + subcategory);
-            List<String> nameFolders = cloudService.getNameFolders("/"+category + "/" + subcategory);
+            boolean forAdmin = isAdmin(request, properties);
+            List<String> nameFolders = cloudService.getNameFolders("/"+category + "/" + subcategory, forAdmin);
             return gson.toJson(nameFolders);
         });
 
@@ -97,6 +101,12 @@ public class Main {
             }
         }
         return directories;
+    }
+    
+    private static boolean isAdmin(Request request, Properties properties){
+    	Session session = request.session(true);
+        String login_admin = properties.getProperty("login_admin");
+        return session.attribute("username").equals(login_admin);
     }
 }
 
