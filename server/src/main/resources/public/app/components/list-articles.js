@@ -31,7 +31,7 @@ class ListArticles extends Component {
           key = {index}
           className = 'list-group-item'
           to = {`/${state.category}/${state.subcategory}/${article}`}>
-          {article.replace('.md', '')}
+          {article.replace('.md', '').replace('.markdown', '')}
         </Link>)
       })}</div>)
     } else {
